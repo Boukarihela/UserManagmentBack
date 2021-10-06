@@ -1,10 +1,10 @@
-package services.impl.user;
+package com.example.usermanagmentback.services.impl.user;
 
-import dao.entities.User;
-import dao.repositories.UserDao;
+import com.example.usermanagmentback.dao.entities.User;
+import com.example.usermanagmentback.dao.repositories.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import services.interfaces.user.UserService;
+import com.example.usermanagmentback.services.interfaces.user.UserService;
 
 import java.util.List;
 import java.util.Optional;

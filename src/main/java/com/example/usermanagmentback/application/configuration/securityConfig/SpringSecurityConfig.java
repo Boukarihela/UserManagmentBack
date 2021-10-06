@@ -1,4 +1,4 @@
-package application.configuration.securityConfig;
+package com.example.usermanagmentback.application.configuration.securityConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,11 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -33,13 +28,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
+               .antMatchers("/user/api/**").permitAll()
                 .antMatchers("/api/user/signin/**").permitAll()
-                .antMatchers("/api/user/add").permitAll()
-                .antMatchers("/api/user/forgotByMail/**").permitAll()
-                .antMatchers("/api/user/forgot/**").permitAll()
-                .antMatchers("/api/facture/*/facture.pdf").permitAll()
-                .antMatchers("/api/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+               .antMatchers("/api/user/add").permitAll()
+
+               .antMatchers("/api/**")
+             .hasRole("ADMIN")
+        //      .antMatchers( "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))

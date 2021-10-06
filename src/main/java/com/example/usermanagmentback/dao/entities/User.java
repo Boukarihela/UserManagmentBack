@@ -1,6 +1,6 @@
-package dao.entities;
+package com.example.usermanagmentback.dao.entities;
 
-import dao.enums.Role;
+import com.example.usermanagmentback.dao.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name="user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

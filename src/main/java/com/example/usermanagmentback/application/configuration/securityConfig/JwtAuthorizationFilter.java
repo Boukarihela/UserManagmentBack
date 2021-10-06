@@ -1,4 +1,4 @@
-package application.configuration.securityConfig;
+package com.example.usermanagmentback.application.configuration.securityConfig;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

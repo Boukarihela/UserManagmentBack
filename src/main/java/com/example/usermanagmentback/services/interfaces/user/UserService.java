@@ -1,6 +1,6 @@
-package services.interfaces.user;
+package com.example.usermanagmentback.services.interfaces.user;
 
-import dao.entities.User;
+import com.example.usermanagmentback.dao.entities.User;
 import java.util.List;
 import java.util.Optional;
 
