@@ -2,6 +2,7 @@ package com.example.usermanagmentback.application.controller;
 
 import com.example.usermanagmentback.application.configuration.securityConfig.JwtAuthenticationFilter;
 import com.example.usermanagmentback.dao.entities.User;
+import com.example.usermanagmentback.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,13 +33,13 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Void> addUser(@RequestBody User user){
+    public ResponseEntity<User> addUser(@RequestBody User user){
        // logger.debug("Invocation de la resource : POST /User/");
         long id = 0;
         if (user != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            id = userService.addUser(user);
-            return new ResponseEntity(id, HttpStatus.CREATED);
+            User updatedUser= userService.createOrUpdate(user);
+            return new ResponseEntity<User>(updatedUser, HttpStatus.CREATED);
         } else {
             return new ResponseEntity(id, HttpStatus.NO_CONTENT);
         }
@@ -57,14 +58,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/findByEmail/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> finUserByEmail(@PathVariable("email") String email) {
-        Optional<User> user = userService.findUserByEmail(email);
+    public ResponseEntity<User> finUserByEmail(@PathVariable("email") String email) throws RecordNotFoundException {
+        User user = userService.findUserByEmail(email);
         if (user != null) {
-            return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
 
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @DeleteMapping("/delete/{userId}")
+    public HttpStatus deleteUserById(@PathVariable("userId") Long id)
+            throws RecordNotFoundException {
+        userService.deleteUser(id);
+        return HttpStatus.FORBIDDEN;
     }
     @PostMapping("/signin/{email}/{password}")
     public Map login(

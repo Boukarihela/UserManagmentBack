@@ -1,20 +1,22 @@
 package com.example.usermanagmentback.services.interfaces.user;
 
 import com.example.usermanagmentback.dao.entities.User;
+import com.example.usermanagmentback.exceptions.RecordNotFoundException;
+
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
     long addUser(User user);
+    User createOrUpdate(User user);
 
     User updateUser(User user);
 
     List<User> getAllUsers();
 
-    Optional<User> findUserById(Long userId);
+    User findUserById(Long userId) throws RecordNotFoundException;
 
-    void deleteUser(Long userId);
+    void deleteUser(Long userId) throws RecordNotFoundException;
 
     boolean changePassword(String oldPassword, String newPassword, Long id);
 
@@ -22,5 +24,5 @@ public interface UserService {
 
     boolean changeForgotPassword(String token, String newPwd, String email);
 
-    Optional<User>  findUserByEmail(String email);
+    User findUserByEmail(String email) throws RecordNotFoundException;
 }
